@@ -1,0 +1,139 @@
+#:import ScrollEffect  kivy.effects.scroll.ScrollEffect
+
+<MyBoxLayout@BoxLayout>:
+    canvas.before:
+        Color:
+            rgba: 0.85, 0.85, 0.85, 1
+        Rectangle:
+            pos: self.pos
+            size: self.size
+
+<PaddingBoxLayout@BoxLayout>
+    padding: 40
+
+<ScrollView>:
+    do_scroll_x: True
+    do_scroll_y: True
+    scroll_type: ['bars', 'content']
+    scroll_wheel_distance: dp(114)
+    bar_width: dp(20)
+    effect_cls: ScrollEffect
+    canvas.before:
+        Color:
+            rgba: 1.0, 1.0, 1.0, 1
+        Rectangle:
+            pos: self.pos
+            size: self.size
+
+<Header@Label>
+    color: 1, 1, 1, 1
+
+
+<JsonMakerScreen>:
+    MyBoxLayout:
+        MyBoxLayout:
+            size_hint_x: 0.7
+            orientation: "vertical"
+            padding: 10
+
+            ScrollView:
+                size_hint_y: 1
+                item_view_data: item_view_data
+                do_scroll_x: False
+                scroll_x: self.item_view_data.scroll_x
+                BoxLayout:
+                    canvas.before:
+                        Color:
+                            rgba: 0.7, 0.7, 0.8, 1
+                        Rectangle:
+                            pos: self.pos
+                            size: self.size
+                    size_hint_x: None
+                    width: 0.67*root.width
+                    Header:
+                        size_hint_x: 0.15
+                        text: "No."
+                    Header:
+                        size_hint_x: 0.7
+                        text: "name"
+                    Header:
+                        size_hint_x: 0.7
+                        text: "keyword"
+            ScrollView:
+                id: item_view_data
+                size_hint_y: 15
+                BoxLayout:
+                    id: container
+                    orientation: 'vertical'
+                    size_hint_x: None
+                    size_hint_y: None
+                    width: 0.67*root.width
+                    height: 1.5*root.width
+
+            Label:
+                id: message
+                size_hint_y: 2
+                color: 0, 0, 0, 1
+                text: ""
+
+        PaddingBoxLayout:
+            size_hint_x: 0.3
+            orientation: "vertical"
+            BoxLayout:
+                orientation: "vertical"
+                Label:
+                BoxLayout:
+                    ToggleButton:
+                        id: type_pc
+                        background_color: [ 0.0, 0.0, 1.0, 1 ]
+                        text: "PC"
+                        state: "down"
+                        group: "SiteType"
+                        on_press: root.press_btn_pc()
+                    ToggleButton:
+                        id: type_mobile
+                        background_color: [ 0.0, 0.0, 1.0, 1 ]
+                        background_color: [ 0.0, 0.0, 1.0, 1 ]
+                        text: "モバイル"
+                        group: "SiteType"
+                        on_press: root.press_btn_mobile()
+                Label:
+
+            BoxLayout:
+                orientation: "vertical"
+                Label:
+                Button:
+                    id: get_site_info_button
+                    text: "キーワードサイトからの情報取得"
+                    on_press: root.get_site_info()
+                Label:
+
+            BoxLayout:
+                orientation: "vertical"
+                Label:
+                Button:
+                    text: "ソースExcelの読込"
+                    on_press: root.disp_drag_and_drop_msg()
+                Label:
+
+            BoxLayout:
+                orientation: "vertical"
+                Label:
+                Button:
+                    id: dump_checkoutprofiles_button
+                    text: "CCprofile.txtとAccount.txtを出力"
+                    disabled: True
+                    on_press: root.dump_json_files()
+                BoxLayout:
+                    Label:
+                        color: 0, 0, 0, 1
+                        text: "1ファイルのデータ数"
+                    BoxLayout:
+                        BoxLayout:
+                            padding: 5
+                            TextInput:
+                                id: max_data_num_per_file
+                                text: "100"
+                                multiline: False
+                                write_tab: False
+                        Label:
