@@ -1,0 +1,2 @@
+# BnbSupremeSupportTool
+NIKEサイトから商品情報をスクレイピングして、入力BnB Profile.xlsxと組み合わせてBOTの入力JSONファイルを作成する。
